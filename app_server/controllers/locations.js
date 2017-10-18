@@ -1,17 +1,5 @@
 /* GET 'home' page */
 
-
-var mongoose = require('mongoose');
-
-var locationSchema = new mongoose.Schema({
-	name: {type: String, required: true},
-	address: String,
-	rating: {type: Number, "default": 0, min: 0, max: 5},
-	facilities: [String],
-	coords: {type: [Number], index: '2dsphere'}
-});
-
-
 module.exports.homelist = function(req, res) {
     res.render('locations-list', {
         title: 'Loc8r - find a place to work with wifi',

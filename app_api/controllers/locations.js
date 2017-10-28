@@ -32,7 +32,7 @@ module.exports.locationsReadOne = function(req, res){
 				sendJsonResponse(res, 404, err);
 				return;
 			}
-			sendJsonResponse(res, 200, {"status" : "success"});
+			sendJsonResponse(res, 200, location);
 		});
 	}else{
 		sendJsonResponse(res, 404, {

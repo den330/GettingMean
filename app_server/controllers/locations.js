@@ -14,6 +14,7 @@ var renderHomepage = function(req, res, responseBody){
 	console.log(responseBody);
 	if(!responseBody.length){
 		message = "No places found nearby";
+		responseBody = [];
 	}
 	
 	res.render('locations-list', {

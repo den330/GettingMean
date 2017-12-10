@@ -42,7 +42,7 @@ module.exports.locationsListByDistance = function(req, res){
 	
 	var geoOptions = {
 		spherical: true,
-		maxDistance: theEarth.getRadsFromDistance(20),
+		maxDistance: theEarth.getRadsFromDistance(200),
 		num: 10
 	};
 	

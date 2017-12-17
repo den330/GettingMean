@@ -10,8 +10,9 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 var renderHomepage = function(req, res, responseBody){
+	console.log(apiOptions.server);
 	var message;
-	
+	console.log(responseBody)
 	if (!(responseBody instanceof Array)){
 		message = "API lookup error"
 		responseBody = [];
@@ -41,9 +42,9 @@ module.exports.homelist = function(req, res) {
 		mathod: "GET",
 		json: {},
 		qs: {
-			lng: -0.7992599,
-			lat: 51.378091,
-			maxDistance: 2000
+			lng: -0.9690884,
+			lat: 51.455041,
+			maxDistance: 20
 		}
 	};
 	request(requestOptions, function(err, response, body){

@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var dbURI = 'mongodb://localhost/Loc8r';
-// if(process.env.NODE_ENV === 'production'){
-// 	dbURI = 'mongodb://heroku_476jmcxv:bucf2p5v25g7lkvdhkdqbckr4q@ds155150.mlab.com:55150/heroku_476jmcxv';
-// }
+if(process.env.NODE_ENV === 'production'){
+	dbURI = 'mongodb://heroku_pcjgqrsv:f60lkbsrlc8cucut0i84vc74ji@ds159926.mlab.com:59926/heroku_pcjgqrsv';
+}
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function(){

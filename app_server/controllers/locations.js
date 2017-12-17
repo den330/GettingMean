@@ -6,13 +6,13 @@ var apiOptions = {
 	server: "http://localhost:3000"
 };
 if(process.env.NODE_ENV === 'production'){
-	apiOptions.server = "https://frozen-citadel-15362.herokuapp.com/";
+	apiOptions.server = "https://frozen-citadel-15362.herokuapp.com";
 }
 
 var renderHomepage = function(req, res, responseBody){
 	console.log(apiOptions.server);
 	var message;
-	console.log(responseBody)
+	console.log("response is" + responseBody);
 	if (!(responseBody instanceof Array)){
 		message = "API lookup error"
 		responseBody = [];

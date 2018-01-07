@@ -29,7 +29,7 @@ var _showError = function(req, res, status){
 
 var getLocationInfo = function(req, res, callback){
 	var requestOptions, path;
-	path = "api/locations/" + req.params.locationid;
+	path = "/api/locations/" + req.params.locationid;
 	requestOptions = {
 		url: apiOptions.server + path,
 		method: "GET",

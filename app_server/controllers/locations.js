@@ -10,6 +10,47 @@ if(process.env.NODE_ENV === 'production'){
 	apiOptions.server = "https://frozen-citadel-15362.herokuapp.com";
 }
 
+var _showError = function(req, res, status){
+	var title, content;
+	if(status === 404){
+		title = "404, page not found";
+		content = "Oh dear, Look like we can't find this page. Sorry."
+	}else{
+		title = status + ", something's gone wrong.";
+		content = "Something, somewhere, has gone just a little big wrong."
+	}
+	res.status(status);
+	res.render("generic-text", {
+		title: title,
+		content: content
+	})
+}
+
+
+var getLocationInfo = function(req, res, callback){
+	var requestOptions, path;
+	path = "api/locations/" + req.params.locationid;
+	requestOptions = {
+		url: apiOptions.server + path,
+		method: "GET",
+		json: {}
+	};
+
+	request(requestOptions, function(err, response, body){
+		var data = body;
+		if(response.statusCode === 200){
+			data.coords = {
+				lng: body.coords[0],
+				lat: body.coords[1]
+			};
+			callback(req, res, data);
+		}else{
+			_showError(req, res, response.statusCode);
+		}
+	});
+};
+
+
 var renderHomepage = function(req, res, responseBody){
 	console.log(apiOptions.server);
 	var message;
@@ -71,55 +112,34 @@ var renderDetailPage = function(req, res, locDetail){
 
 
 module.exports.locationInfo = function(req, res) {
-	var requestOptions, path;
-	path = "/api/locations/" + req.params.locationid;
-	requestOptions = {
-		url: apiOptions.server + path,
-		method: "GET",
-		json: {}
-	};
-	request(requestOptions, 
-		function(err, response, body){
-			var data = body;
-			if (response.statusCode == 200){
-				data.coords = {
-					lng: body.coords[0],
-					lat: body.coords[1]
-				};
-				renderDetailPage(req, res, data);
-			}else{
-				_showError(req, res, response.statusCode);
-			}
-		}
-	);
+	getLocationInfo(req, res, function(req, res, responseData){
+		renderDetailPage(req, res, responseData);
+	})
 };
 
 
-var _showError = function(req, res, status){
-	var title, content;
-	if(status === 404){
-		title = "404, page not found";
-		content = "Oh dear, Look like we can't find this page. Sorry."
-	}else{
-		title = status + ", something's gone wrong.";
-		content = "Something, somewhere, has gone just a little big wrong."
-	}
-	res.status(status);
-	res.render("generic-text", {
-		title: title,
-		content: content
-	})
-}
 
 
+module.exports.doAddReview = function(req, res){
+
+};
+
+
+
+
+
+
+var renderReviewForm = function(req, res, locDetail){
+	res.render('location-review-form', {
+		title: 'Review ' + locDetail.name + ' on Loc8r',
+		pageHeader: {title: 'Review ' + locDetail.name}
+	});
+};
 
 
 /* GET 'Add review' page */
 module.exports.addReview = function(req, res) {
-    res.render('location-review-form', {
-        title: 'Review Starcups on Loc8r',
-        pageHeader: {
-            title: 'Review Starcups'
-        }
+    getLocationInfo(req, res, function(req, res, responseData){
+    	renderReviewForm(req, res, responseData);
     });
 };

@@ -38,6 +38,9 @@ var getLocationInfo = function(req, res, callback){
 
 	request(requestOptions, function(err, response, body){
 		var data = body;
+
+		console.log(err);
+
 		if(response.statusCode === 200){
 			data.coords = {
 				lng: body.coords[0],
@@ -114,7 +117,7 @@ var renderDetailPage = function(req, res, locDetail){
 module.exports.locationInfo = function(req, res) {
 	getLocationInfo(req, res, function(req, res, responseData){
 		renderDetailPage(req, res, responseData);
-	})
+	});
 };
 
 
